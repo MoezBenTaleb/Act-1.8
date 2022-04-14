@@ -1,4 +1,4 @@
-
+package TriFichiers;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -66,7 +66,7 @@ break;
 public MusiqueImpl rechercherMusiqueParTitre(ArrayList<MusiqueImpl> array, String titre) {
 	
 	for (MusiqueImpl musiqueImpl : array) {
-		if (musiqueImpl.getTitre().equals(titre)) {
+		if (musiqueImpl.getTitre().equalsIgnoreCase(titre)) {
 			return musiqueImpl;
 		}
 	}
@@ -75,7 +75,7 @@ public MusiqueImpl rechercherMusiqueParTitre(ArrayList<MusiqueImpl> array, Strin
 
 public MusiqueImpl rechercherMusiqueParAuteur(ArrayList<MusiqueImpl> array, String auteur) {
 	for (MusiqueImpl musiqueImpl : array) {
-		if (musiqueImpl.getAutheur().equals(auteur)) {
+		if (musiqueImpl.getAutheur().equalsIgnoreCase(auteur)) {
 			return musiqueImpl;
 		}
 	}

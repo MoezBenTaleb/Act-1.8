@@ -1,5 +1,23 @@
+package TriFichiers;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import java.util.Collections;
+
+import java.util.Scanner;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -10,6 +28,101 @@ import java.util.Scanner;
 public class PlayListeUI {
 
 
+	
+	public static ArrayList<MusiqueImpl> storePlaylistFromFile(ArrayList<MusiqueImpl> playlist)  {
+		
+	
+		
+		
+		System.out.println("Saving playlost to reading.txt");
+
+		   try { 
+			   
+				File A=new File (System.getProperty("user.dir")+"\\src\\TriFichiers\\musics.txt");
+				FileReader fileReader = new FileReader(A);
+				BufferedReader reader = new BufferedReader (fileReader);
+		  
+		      String line = reader.readLine();
+
+		      while(line != null) {
+
+		         
+		            System.out.println(line);
+
+		           
+		            line = reader.readLine();
+		            
+		           if(line != null) {
+		        	   String[] music =   line.split(",");
+			           
+			           playlist.add(new MusiqueImpl(music[0],music[1], music[2], music[3]));	
+		           }
+		           
+		           
+		      }
+		      
+		      reader.close();
+		    } 
+
+
+		      catch (Exception e) {
+
+		    	  	e.printStackTrace();
+
+
+		      }
+
+		     
+		      
+		      return playlist;
+
+		  
+		   
+	}
+	
+	public static void storePlaylistToFile(ArrayList<MusiqueImpl> playlist)  {
+		
+		
+		
+		
+		System.out.println("Saving playlost to save.txt");
+
+		   try { 
+			   
+				File A=new File (System.getProperty("user.dir")+"\\src\\TriFichiers\\save.txt");
+				FileWriter fileWriter = new FileWriter(A);
+				BufferedWriter writer = new BufferedWriter (fileWriter);
+		  
+		 
+		      
+		      
+		      for(MusiqueImpl music : playlist) {
+		    	  
+		    	  writer.write(music.getTitre() + ",");
+		    	  writer.write(music.getAutheur() + ",");
+		    	  writer.write(music.getInterprete() + ",");
+		    	  writer.write(music.getGenre());
+		    	  writer.newLine();
+		      }
+		     
+		      
+		      writer.close();
+		    } 
+
+
+		      catch (Exception e) {
+
+		    	  	e.printStackTrace();
+
+
+		      }
+
+		     
+		    
+
+		  
+		   
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -22,66 +135,85 @@ public class PlayListeUI {
 		MusiqueImpl music5 = new MusiqueImpl("freedom","pharell", "interprete5", "RNB");
 		MusiqueImpl music6 = new MusiqueImpl("all about us", "Tatu", "interprete6", "RNB");
 
-		ArrayList<MusiqueImpl> myList1 = new ArrayList<MusiqueImpl>() ;
-		ArrayList<MusiqueImpl> myList2 = new ArrayList<MusiqueImpl>() ;
+		ArrayList<MusiqueImpl> musicList1 = new ArrayList<MusiqueImpl>() ;
+		ArrayList<MusiqueImpl> musicList2 = new ArrayList<MusiqueImpl>() ;
 		
-		PlayListeImpl PlayListe1=new PlayListeImpl("Best Music", "Hits",5,myList1);
-		PlayListeImpl PlayListe2=new PlayListeImpl("Gold Music", "Hits",5,myList2);
-
-		ArrayList<PlayListeImpl> arrayPlayListe = new ArrayList<PlayListeImpl>();
-		arrayPlayListe.add((PlayListeImpl) PlayListe1);
-		arrayPlayListe.add((PlayListeImpl) PlayListe2);
 		
-		PlayListe1.Ajouter(music1);
-		PlayListe1.Ajouter(music2);
-		PlayListe1.Ajouter(music3);
+		
+		
+	
+		
+		PlayListeImpl playList1=new PlayListeImpl("Best Music", "Hits",5,musicList1);
+		PlayListeImpl playList2=new PlayListeImpl("Gold Music", "Hits",5,musicList2);
+
+		ArrayList<PlayListeImpl> playlistList = new ArrayList<PlayListeImpl>();
+		playlistList.add((PlayListeImpl) playList1);
+		playlistList.add((PlayListeImpl) playList2);
+		
+		playList1.Ajouter(music1);
+		playList1.Ajouter(music2);
+		playList1.Ajouter(music3);
 
 
-		PlayListe2.Ajouter(music4);
-		PlayListe2.Ajouter(music5);
-		PlayListe2.Ajouter(music6);
+		playList2.Ajouter(music4);
+		playList2.Ajouter(music5);
+		playList2.Ajouter(music6);
+		
+		
+		ArrayList<MusiqueImpl> allMusics = new ArrayList<MusiqueImpl>();
+		allMusics.addAll(musicList1);
+		allMusics.addAll(musicList2);
+	
+		
 		Scanner sc = new Scanner(System.in); 
 		
 		
 		System.out.println("Affichage de la play liste");
-		for (PlayListeImpl playListeImpl : arrayPlayListe ) {
+		for (PlayListeImpl playListeImpl : playlistList ) {
 			System.out.println(playListeImpl.getList() + " ");
 		System.out.println();
 		}
 			
-		User utilisateur = new User("Moez","BEN TALEB","MBT",arrayPlayListe);
+		User utilisateur = new User("Moez","BEN TALEB","MBT",playlistList);
 		
 			
 			String titre;
-			System.out.println("donner le titre de la chanson recherchée : ");
+			System.out.println("donner le titre de la chanson recherchï¿½e : ");
 			titre = sc.nextLine();
-			MusiqueImpl test= utilisateur.rechercherMusiqueParTitre(myList1, titre);
+			MusiqueImpl test= utilisateur.rechercherMusiqueParTitre(allMusics, titre);
 			System.out.println(test);
 			String auteur;
-			System.out.println("\ndonner l'auteur de la chanson recherchée : ");
+			System.out.println("\ndonner l'auteur de la chanson recherchï¿½e : ");
 			auteur = sc.nextLine();
-			MusiqueImpl test1=utilisateur.rechercherMusiqueParAuteur(myList2, auteur);
+			MusiqueImpl test1=utilisateur.rechercherMusiqueParAuteur(allMusics, auteur);
 			System.out.println(test1);
 	
 			
-			System.out.println("\nAffichage de la playList dans un ordre croissant et décroissant");
+			System.out.println("\nAffichage de la playList dans un ordre croissant et dï¿½croissant");
 						
-			Collections.sort(arrayPlayListe, User.ComparatorNomCroissant);
+			Collections.sort(playlistList, User.ComparatorNomCroissant);
 			System.out.println("\nAfficage de la play liste par nom dans l'ordre croissant \n");
-			for (PlayListeImpl playlisteImpl : arrayPlayListe) {
+			for (PlayListeImpl playlisteImpl : playlistList) {
 				System.out.println(playlisteImpl.getNom() + " ");
 			}
-				Collections.sort(arrayPlayListe, User.ComparatorNomDecroissant);
-				System.out.println("\nAfficage de la play liste par nom dans l'ordre décroissant \n");
-					for (PlayListeImpl playlisteImpl1 : arrayPlayListe) {
+				Collections.sort(playlistList, User.ComparatorNomDecroissant);
+				System.out.println("\nAfficage de la play liste par nom dans l'ordre dï¿½croissant \n");
+					for (PlayListeImpl playlisteImpl1 : playlistList) {
 						System.out.println(playlisteImpl1.getNom() + " ");
 					}
 					
-			System.out.println("\ndonner la musique à supprimer : ");
+			System.out.println("\ndonner la musique ï¿½ supprimer : ");
 			String musique = sc.nextLine();
-			utilisateur.SupprimerMusique(myList1,musique);
-			PlayListe1.afficherPlayListe();
-
+			utilisateur.SupprimerMusique(allMusics,musique);
+			
+			
+			
+			storePlaylistFromFile(musicList1);
+			storePlaylistToFile(musicList1);
+			
+			
+			
+			System.out.println(allMusics.toString());
 	
 }
 }

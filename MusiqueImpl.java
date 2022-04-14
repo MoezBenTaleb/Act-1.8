@@ -1,3 +1,4 @@
+package TriFichiers;
 
 public class MusiqueImpl implements Musique {
 private String titre;
